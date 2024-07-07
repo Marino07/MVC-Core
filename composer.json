@@ -1,0 +1,13 @@
+{
+    "name": "project/mvc",
+    "description": "MVC framework ili aplikacija za X svrhu",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "require": {
+        "monolog/monolog": "^2.0"
+    }
+}
