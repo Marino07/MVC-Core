@@ -6,18 +6,24 @@ class Router
 {
     protected array $routes = [];
     public Request $request;
+    public Response $response;
 
     /**
      * @param Request $request
      */
-    public function __construct(Request $request)
+    public function __construct(Request $request, Response $response)
     {
         $this->request = $request;
+        $this->response = $response;
     }
 
 
     public function get($path,$callback){
         $this->routes['get'][$path] = $callback;
+
+    }
+    public function post($path,$callback){
+        $this->routes['post'][$path] = $callback;
 
     }
 
@@ -26,7 +32,8 @@ class Router
         $method = $this->request->getMethod();
         $callback = $this->routes[$method][$path] ?? false;
         if($callback === false){
-            return 'not found';
+            $this->response->setStatuscode(404);
+            return $this->renderView("_404");
         }
         if(is_string($callback)){
             return $this->renderView($callback);
@@ -38,7 +45,13 @@ class Router
     public function renderView($view){
         $viewContent = $this->renderOnlyView($view);
         $layoutContent = $this->layoutContent();
-        return str_replace('{{conntent}}',$viewContent,$layoutContent);
+        return str_replace('{{content}}',$viewContent,$layoutContent);
+
+    }
+    public function renderContent($viewContent){
+        $layoutContent = $this->layoutContent();
+        return str_replace('{{content}}',$viewContent,$layoutContent);
+
     }
 
     protected function layoutContent()
@@ -55,6 +68,7 @@ class Router
         return ob_get_clean(); // catch content
 
     }
+
 
 
 }
