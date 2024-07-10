@@ -1,11 +1,28 @@
 <?php
 
 namespace app\controllers;
-class SiteController
+use app\core\Application;
+use app\core\Controller;
+use app\core\Request;
+
+class SiteController extends Controller
 {
     public function contact(){
 
-        return 'handling some data';
+        return $this->render('contact');
+    }
+    public function home(){
+        $params = [
+            'name' => 'Marino'
+        ];
+        return $this->render('home',$params);
+    }
+    public function handlingContact(Request $request){
+        $body = $request->getBody();
+        echo '<pre>';
+        var_dump($body);
+        echo '<pre>';
+
     }
 
 }
