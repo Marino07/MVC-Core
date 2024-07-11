@@ -5,7 +5,7 @@
 <form action="" method="post">
     <div class="form-group">
         <label>First Name</label>
-        <input type="text" name="name" class="form-control" >
+        <input type="text" name="firstname" class="form-control" >
     </div>
     <div class="form-group">
         <label>Last Name</label>
@@ -21,7 +21,7 @@
     </div>
     <div class="form-group">
         <label>Confirm Password</label>
-        <input type="password" name="passwordrepeat" class="form-control" >
+        <input type="password" name="confirmPassword" class="form-control" >
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
