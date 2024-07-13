@@ -32,6 +32,7 @@ class Database
         });
 
         $toApplyMigrations = array_diff($migrationFiles, $appliedMigrations);
+        var_dump($toApplyMigrations);
 
         foreach ($toApplyMigrations as $migration) {
             if ($migration === '.' || $migration === '..') {
@@ -45,16 +46,16 @@ class Database
                 $instance = new $className();
                 $instance->up();
                 $newMigrations[] = $migration;
-                $this->log("Primjenjena migracija :".$className). PHP_EOL;
+                echo "Primijenjena migracija: $className" . PHP_EOL;
             } else {
-                $this->log("Klasa $className nije pronađena" ). PHP_EOL;
+                echo "Klasa $className nije pronađena" . PHP_EOL;
             }
         }
 
         if (!empty($newMigrations)) {
             $this->saveMigrations($newMigrations);
         } else {
-            $this->log('Sve migracije su primijenjene.');
+            echo 'Sve migracije su primijenjene.' . PHP_EOL;
         }
     }
 
@@ -79,8 +80,5 @@ class Database
         $str = implode(",", array_map(fn($m) => "('$m')", $migrations));
         $statement = $this->pdo->prepare("INSERT INTO migrations (migration) VALUES $str");
         $statement->execute();
-    }
-    protected function log($message){
-        echo '['.date('Y-m-d H:i:s').']-'.$message.PHP_EOL;
     }
 }
