@@ -32,7 +32,6 @@ class Database
         });
 
         $toApplyMigrations = array_diff($migrationFiles, $appliedMigrations);
-        var_dump($toApplyMigrations);
 
         foreach ($toApplyMigrations as $migration) {
             if ($migration === '.' || $migration === '..') {
@@ -80,5 +79,8 @@ class Database
         $str = implode(",", array_map(fn($m) => "('$m')", $migrations));
         $statement = $this->pdo->prepare("INSERT INTO migrations (migration) VALUES $str");
         $statement->execute();
+    }
+    public function prepare($sql){
+        return Application::$app->db->pdo->prepare($sql);
     }
 }
