@@ -22,7 +22,6 @@ class SiteController extends Controller
         echo '<pre>';
         var_dump($body);
         echo '<pre>';
-
     }
 
 }

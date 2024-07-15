@@ -24,6 +24,9 @@ abstract class Model
 
     }
     abstract public function rules(): array;
+    public function labels(): array{
+        return [];
+    }
     public array $errors = [];
     public function validate(){
         foreach($this->rules() as $attribute => $rules) {
@@ -55,7 +58,7 @@ abstract class Model
                 if($ruleName === self::RULE_UNIQUE ){
                     $className = $rule['class'];
                     $uniqueAttr = $rule['attribute'] ?? $attribute;
-                    $tableName = $className::tableName() ;
+                    $tableName = $className::tableName();
                     $statement = Application::$app->db->prepare("SELECT * FROM $tableName WHERE $uniqueAttr = :attr");
                     $statement->bindValue(":attr",$value);
                     $statement->execute();

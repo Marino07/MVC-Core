@@ -32,8 +32,8 @@ class Field
         <input type="%s" id="%s" name="%s" value="%s" class="form-control %s">
         <div class="invalid-feedback">%s</div>
     </div>',
-            $this->attribute,
-            ucfirst($this->attribute),
+            $this->model->labels()[$this->attribute] ?? $this->attribute,
+            $this->model->labels()[$this->attribute] ?? $this->attribute,
             $this->type, // Ovdje je ispravljen redoslijed
             $this->attribute,
             $this->attribute,
