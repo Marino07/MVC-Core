@@ -47,7 +47,7 @@ class Router
             $callback[0] = Application::$app->controller; // set callback[0] on that
         }
 
-        return call_user_func($callback, $this->request); // adding request to handling function in SiteController
+        return call_user_func($callback, $this->request,$this->response); // adding request to handling function in SiteController
     }
 
     public function renderView($view,$params = [])
