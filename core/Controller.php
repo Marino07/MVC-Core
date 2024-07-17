@@ -10,7 +10,7 @@ class Controller
     protected array $middlewares = [];
     public string $layout = 'main';
     public function render($view,$params = []){
-        return Application::$app->router->renderView($view,$params);
+        return Application::$app->view->renderView($view,$params);
     }
     public function setLayout($layout){
         $this->layout = $layout;
@@ -19,7 +19,6 @@ class Controller
     public function registerMiddleWare(BaseMiddleware $middleware){
         $this->middlewares[] = $middleware;
     }
-
     /**
      * @return array
      */

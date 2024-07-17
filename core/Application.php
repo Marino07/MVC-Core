@@ -1,6 +1,9 @@
 <?php
 namespace app\core;
 
+use app\core\db\Database;
+use app\core\db\DbModel;
+
 class Application
 {
 public static string $ROOT_DIR;
@@ -11,7 +14,9 @@ public Request $request;
 public Session $session;
 public Response $response;
 public Database $db;
-public ?DbModel $user;
+public ?UserModel $user;
+public View $view;
+
 
 public static Application $app;
 public ?Controller $controller = null;
@@ -25,6 +30,8 @@ $this->request = new Request();
 $this->response = new Response();
 $this->session = new Session();
 $this->router = new Router($this->request, $this->response);
+$this->view = new View();
+
 $this->db = new Database($config['db']);
 $primaryValue = $this->session->get('user'); // number id
 if($primaryValue){
@@ -35,14 +42,13 @@ if($primaryValue){
 }
 
 }
-
     public function run()
     {
         try {
             echo $this->router->resolve();
         } catch (\Exception $e) {
             $this->response->setStatusCode($e->getCode() ?: 500);
-            echo $this->router->renderView('_error', [
+            echo $this->view->renderView('_error', [
                 'exception' => $e
             ]);
         }
@@ -57,7 +63,7 @@ public function setController(Controller $controller): void
 $this->controller = $controller;
 }
 
-public function login(DbModel $user)
+public function login(UserModel $user)
 {
 $this->user = $user;
 $primaryKey = $user->primaryKey(); //checking id
